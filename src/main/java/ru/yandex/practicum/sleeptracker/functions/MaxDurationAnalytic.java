@@ -11,7 +11,7 @@ public class MaxDurationAnalytic implements Function<List<SleepingSession>, Slee
     @Override
     public SleepAnalysisResult apply(List<SleepingSession> data) {
         long max = data.stream()
-                .mapToLong(s -> Duration.between(s.getStart(), s.getFinish()).toMinutes())
+                .mapToLong(s -> Duration.between(s.getStart(), s.getEnd()).toMinutes())
                 .max()
                 .orElse(0);
         return new SleepAnalysisResult("Максимальная продолжительность сессии (в минутах)", max);

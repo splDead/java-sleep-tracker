@@ -13,6 +13,14 @@ public class SleepTrackerApp {
     // список функций анализаторов
     private final List<Function<List<SleepingSession>, SleepAnalysisResult>> analyzers = new ArrayList<>();
 
+    public void register(Function<List<SleepingSession>, SleepAnalysisResult> function) {
+        analyzers.add(function);
+    }
+
+    public List<Function<List<SleepingSession>, SleepAnalysisResult>> getAnalyzers() {
+        return analyzers;
+    }
+
     public static void main(String[] args) {
         if (args.length < 1) {
             System.out.println("Использование: укажите путь к файлу логов в качестве аргумента");
@@ -26,14 +34,14 @@ public class SleepTrackerApp {
             SleepTrackerApp app = new SleepTrackerApp();
 
             // регистрируем функции анализаторы
-            app.analyzers.add(new SessionCounter());
-            app.analyzers.add(new GoodQualityCounter());
-            app.analyzers.add(new BadQualityCounter());
-            app.analyzers.add(new MinDurationAnalytic());
-            app.analyzers.add(new MaxDurationAnalytic());
-            app.analyzers.add(new AverageDurationAnalytic());
-            app.analyzers.add(new SleeplessNightAnalytic());
-            app.analyzers.add(new ChronotypeAnalytic());
+            app.register(new SessionCounter());
+            app.register(new GoodQualityCounter());
+            app.register(new BadQualityCounter());
+            app.register(new MinDurationAnalytic());
+            app.register(new MaxDurationAnalytic());
+            app.register(new AverageDurationAnalytic());
+            app.register(new SleeplessNightAnalytic());
+            app.register(new ChronotypeAnalytic());
 
             // чтение сразу всего файла для избежания использования цикла while
             List<String> sleepRawData = Files.readAllLines(Paths.get(filePath));

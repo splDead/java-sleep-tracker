@@ -6,13 +6,13 @@ import java.time.format.DateTimeFormatter;
 public class SleepingSession {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm");
 
-    private LocalDateTime start;
-    private LocalDateTime finish;
-    private Quality quality;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+    private final Quality quality;
 
     public SleepingSession(LocalDateTime start, LocalDateTime finish, Quality quality) {
         this.start = start;
-        this.finish = finish;
+        this.end = finish;
         this.quality = quality;
     }
 
@@ -20,8 +20,8 @@ public class SleepingSession {
         return start;
     }
 
-    public LocalDateTime getFinish() {
-        return finish;
+    public LocalDateTime getEnd() {
+        return end;
     }
 
     public Quality getQuality() {
@@ -42,7 +42,7 @@ public class SleepingSession {
     public String toString() {
         return "SleepingSession{" +
                 "start=" + start.format(FORMATTER) +
-                ", finish=" + finish.format(FORMATTER) +
+                ", finish=" + end.format(FORMATTER) +
                 ", quality=" + quality +
                 '}';
     }

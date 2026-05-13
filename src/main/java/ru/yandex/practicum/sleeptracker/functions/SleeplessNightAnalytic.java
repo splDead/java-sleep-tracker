@@ -1,5 +1,6 @@
 package ru.yandex.practicum.sleeptracker.functions;
 
+import ru.yandex.practicum.sleeptracker.DateUtil;
 import ru.yandex.practicum.sleeptracker.SleepAnalysisResult;
 import ru.yandex.practicum.sleeptracker.SleepingSession;
 
@@ -19,18 +20,8 @@ public class SleeplessNightAnalytic implements Function<List<SleepingSession>, S
 
         // период анализа бессонницы
         // определяем первую ночь
-        LocalDateTime firstStart = data.get(0).getStart();
-        LocalDateTime firstSessionStart;
-
-        // если первая сессия до 12, то считаем полночь текущего дня
-        if (firstStart.toLocalTime().isBefore(LocalTime.NOON)) {
-            firstSessionStart = firstStart.toLocalDate().atStartOfDay();
-        } else {
-            // если после 12, то считаем полночь от следующего дня
-            firstSessionStart = firstStart.toLocalDate().plusDays(1).atStartOfDay();
-        }
-
-        LocalDateTime lastSessionEnd = data.get(data.size() - 1).getFinish();
+        LocalDateTime firstSessionStart = DateUtil.getNightStart(data.get(0).getStart());
+        LocalDateTime lastSessionEnd = data.get(data.size() - 1).getEnd();
 
         // считаем дни в анализируемом периоде
         long daysBetween = ChronoUnit.DAYS.between(firstSessionStart, lastSessionEnd);
@@ -43,7 +34,7 @@ public class SleeplessNightAnalytic implements Function<List<SleepingSession>, S
 
                 // ищем не пересечения диапазона
                 return data.stream().noneMatch(session ->
-                        session.getStart().isBefore(nightEnd) && session.getFinish().isAfter(nightStart)
+                        session.getStart().isBefore(nightEnd) && session.getEnd().isAfter(nightStart)
                 );
             })
             .count();

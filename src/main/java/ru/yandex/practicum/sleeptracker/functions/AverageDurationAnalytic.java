@@ -11,7 +11,7 @@ public class AverageDurationAnalytic implements Function<List<SleepingSession>, 
     @Override
     public SleepAnalysisResult apply(List<SleepingSession> data) {
         double avg = data.stream()
-                .mapToLong(s -> Duration.between(s.getStart(), s.getFinish()).toMinutes())
+                .mapToLong(s -> Duration.between(s.getStart(), s.getEnd()).toMinutes())
                 .average()
                 .orElse(0.0);
         return new SleepAnalysisResult("Средняя продолжительность сессии (в минутах)", String.format("%.0f", avg));

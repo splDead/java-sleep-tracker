@@ -11,7 +11,7 @@ public class MinDurationAnalytic implements Function<List<SleepingSession>, Slee
     @Override
     public SleepAnalysisResult apply(List<SleepingSession> data) {
         long min = data.stream()
-                .mapToLong(s -> Duration.between(s.getStart(), s.getFinish()).toMinutes())
+                .mapToLong(s -> Duration.between(s.getStart(), s.getEnd()).toMinutes())
                 .min()
                 .orElse(0);
         return new SleepAnalysisResult("Минимальная продолжительность сессии (в минутах)", min);
