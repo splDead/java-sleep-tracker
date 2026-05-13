@@ -7,8 +7,12 @@ public enum Chronotype {
 
     private final String title;
 
-    Chronotype(String title) { this.title = title; }
+    Chronotype(String title) {
+        this.title = title;
+    }
 
     @Override
-    public String toString() { return title; }
+    public String toString() {
+        return title;
+    }
 }
