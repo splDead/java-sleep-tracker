@@ -18,7 +18,7 @@ class SessionCounterTest {
     @DisplayName("Должен возвращать 0, если список сессий пуст")
     void applyShouldReturnZeroWhenDataIsEmptyForSessionCounter() {
         List<SleepingSession> emptyList = new ArrayList<>();
-        SleepAnalysisResult result = analytic.apply(emptyList);
+        SleepAnalysisResult<?> result = analytic.apply(emptyList);
 
         assertNotNull(result);
         assertEquals("Общее количество сессий сна", result.getDescription());
@@ -33,7 +33,7 @@ class SessionCounterTest {
             TestUtil.createSession("2026-05-12T23:00:00", "2026-05-13T04:00:00", Quality.BAD),
             TestUtil.createSession("2026-05-13T21:30:00", "2026-05-14T06:30:00", Quality.GOOD)
         );
-        SleepAnalysisResult result = analytic.apply(data);
+        SleepAnalysisResult<?> result = analytic.apply(data);
 
         assertEquals(3, result.getValue());
     }

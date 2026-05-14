@@ -11,13 +11,13 @@ import java.util.function.Function;
 
 public class SleepTrackerApp {
     // список функций анализаторов
-    private final List<Function<List<SleepingSession>, SleepAnalysisResult>> analyzers = new ArrayList<>();
+    private final List<Function<List<SleepingSession>, SleepAnalysisResult<?>>> analyzers = new ArrayList<>();
 
-    public void register(Function<List<SleepingSession>, SleepAnalysisResult> function) {
+    public void register(Function<List<SleepingSession>, SleepAnalysisResult<?>> function) {
         analyzers.add(function);
     }
 
-    public List<Function<List<SleepingSession>, SleepAnalysisResult>> getAnalyzers() {
+    public List<Function<List<SleepingSession>, SleepAnalysisResult<?>>> getAnalyzers() {
         return analyzers;
     }
 

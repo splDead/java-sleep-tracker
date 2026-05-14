@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ChronotypeAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult> {
+public class ChronotypeAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult<?>> {
     @Override
-    public SleepAnalysisResult apply(List<SleepingSession> data) {
+    public SleepAnalysisResult<?> apply(List<SleepingSession> data) {
         // считаем счетчики хронотипов
         Map<Chronotype, Long> counts = data.stream()
             .filter(this::isNightSession) // фильтруем дневной сон
@@ -34,7 +34,7 @@ public class ChronotypeAnalytic implements Function<List<SleepingSession>, Sleep
             finalType = Chronotype.PIGEON;
         }
 
-        return new SleepAnalysisResult("Ваш хронотип", finalType);
+        return new SleepAnalysisResult<>("Ваш хронотип", finalType);
     }
 
     private boolean isNightSession(SleepingSession s) {

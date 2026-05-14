@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.LongStream;
 
-public class SleeplessNightAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult> {
+public class SleeplessNightAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult<?>> {
     @Override
-    public SleepAnalysisResult apply(List<SleepingSession> data) {
+    public SleepAnalysisResult<?> apply(List<SleepingSession> data) {
         if (data.isEmpty()) {
-            return new SleepAnalysisResult("Количество бессонных ночей", 0);
+            return new SleepAnalysisResult<>("Количество бессонных ночей", 0);
         }
 
         // период анализа бессонницы
         // определяем первую ночь
-        LocalDateTime firstSessionStart = DateUtil.getNightStart(data.get(0).getStart());
-        LocalDateTime lastSessionEnd = data.get(data.size() - 1).getEnd();
+        LocalDateTime firstSessionStart = DateUtil.getNightStart(data.getFirst().getStart());
+        LocalDateTime lastSessionEnd = data.getLast().getEnd();
 
         // считаем дни в анализируемом периоде
         long daysBetween = ChronoUnit.DAYS.between(firstSessionStart, lastSessionEnd);
@@ -38,6 +38,6 @@ public class SleeplessNightAnalytic implements Function<List<SleepingSession>, S
             })
             .count();
 
-        return new SleepAnalysisResult("Количество бессонных ночей (с 00:00 до 06:00)", sleeplessNightsCount);
+        return new SleepAnalysisResult<>("Количество бессонных ночей (с 00:00 до 06:00)", sleeplessNightsCount);
     }
 }
