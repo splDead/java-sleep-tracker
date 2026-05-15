@@ -17,7 +17,7 @@ class ChronotypeAnalyticTest {
     @Test
     @DisplayName("Должен возвращать PIGEON для пустого списка сессий")
     void applyShouldReturnPigeonWhenDataIsEmpty() {
-        SleepAnalysisResult<?> result = analytic.apply(new ArrayList<>());
+        SleepAnalysisResult<Chronotype> result = analytic.apply(new ArrayList<>());
 
         assertNotNull(result);
         assertEquals("Ваш хронотип", result.getDescription());
@@ -32,7 +32,7 @@ class ChronotypeAnalyticTest {
         SleepingSession owlSession2 = TestUtil.createSession("2026-05-13T23:15:00", "2026-05-14T10:00:00", Quality.GOOD);
         // сессия жаворонка: засыпание до 22:00, подъем до 07:00
         SleepingSession larkSession = TestUtil.createSession("2026-05-12T21:00:00", "2026-05-13T06:00:00", Quality.BAD);
-        SleepAnalysisResult<?> result = analytic.apply(List.of(owlSession1, owlSession2, larkSession));
+        SleepAnalysisResult<Chronotype> result = analytic.apply(List.of(owlSession1, owlSession2, larkSession));
 
         assertEquals(Chronotype.OWL, result.getValue());
     }
@@ -43,7 +43,7 @@ class ChronotypeAnalyticTest {
         SleepingSession larkSession1 = TestUtil.createSession("2026-05-12T21:00:00", "2026-05-13T06:00:00", Quality.GOOD);
         SleepingSession larkSession2 = TestUtil.createSession("2026-05-13T21:30:00", "2026-05-14T05:30:00", Quality.BAD);
         SleepingSession pigeonSession = TestUtil.createSession("2026-05-12T22:30:00", "2026-05-13T08:00:00", Quality.GOOD);
-        SleepAnalysisResult<?> result = analytic.apply(List.of(larkSession1, larkSession2, pigeonSession));
+        SleepAnalysisResult<Chronotype> result = analytic.apply(List.of(larkSession1, larkSession2, pigeonSession));
 
         assertEquals(Chronotype.LARK, result.getValue());
     }
@@ -53,7 +53,7 @@ class ChronotypeAnalyticTest {
     void applyShouldReturnPigeonWhenOwlsAndLarksAreEqual() {
         SleepingSession owlSession = TestUtil.createSession("2026-05-12T23:30:00", "2026-05-13T09:30:00", Quality.GOOD);
         SleepingSession larkSession = TestUtil.createSession("2026-05-12T21:00:00", "2026-05-13T06:00:00", Quality.NORMAL);
-        SleepAnalysisResult<?> result = analytic.apply(List.of(owlSession, larkSession));
+        SleepAnalysisResult<Chronotype> result = analytic.apply(List.of(owlSession, larkSession));
 
         assertEquals(Chronotype.PIGEON, result.getValue());
     }
@@ -63,7 +63,7 @@ class ChronotypeAnalyticTest {
     void applyShouldIgnoreDaytimeSessions() {
         SleepingSession dayLarkSession = TestUtil.createSession("2026-05-13T13:00:00", "2026-05-13T16:00:00", Quality.GOOD);
         SleepingSession nightOwlSession = TestUtil.createSession("2026-05-12T23:30:00", "2026-05-13T09:30:00", Quality.GOOD);
-        SleepAnalysisResult<?> result = analytic.apply(List.of(dayLarkSession, nightOwlSession));
+        SleepAnalysisResult<Chronotype> result = analytic.apply(List.of(dayLarkSession, nightOwlSession));
 
         assertEquals(Chronotype.OWL, result.getValue());
     }
@@ -72,7 +72,7 @@ class ChronotypeAnalyticTest {
     @DisplayName("Должен учитывать ночную сессию, если она началась после полуночи и закончилась до 6 утра")
     void applyShouldIncludeSessionWhenItIsInsideMiddleNightInterval() {
         SleepingSession middleNightSession = TestUtil.createSession("2026-05-13T01:00:00", "2026-05-13T05:00:00", Quality.BAD);
-        SleepAnalysisResult<?> result = analytic.apply(List.of(middleNightSession));
+        SleepAnalysisResult<Chronotype> result = analytic.apply(List.of(middleNightSession));
 
         assertEquals(Chronotype.PIGEON, result.getValue());
     }

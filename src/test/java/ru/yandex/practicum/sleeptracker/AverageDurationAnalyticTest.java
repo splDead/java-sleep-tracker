@@ -19,7 +19,7 @@ class AverageDurationAnalyticTest {
     @DisplayName("Должен возвращать 0, если список сессий пуст")
     void applyShouldReturnZeroWhenDataIsEmptyForAverageDurationAnalytic() {
         List<SleepingSession> emptyList = new ArrayList<>();
-        SleepAnalysisResult<?> result = analytic.apply(emptyList);
+        SleepAnalysisResult<String> result = analytic.apply(emptyList);
 
         assertNotNull(result);
         assertEquals("Средняя продолжительность сессии (в минутах)", result.getDescription());
@@ -33,7 +33,7 @@ class AverageDurationAnalyticTest {
         LocalDateTime end = LocalDateTime.parse("2026-05-14T06:00:00");
         SleepingSession session = new SleepingSession(start, end, Quality.GOOD);
         List<SleepingSession> data = List.of(session);
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<String> result = analytic.apply(data);
 
         assertEquals("480", result.getValue());
     }
@@ -56,7 +56,7 @@ class AverageDurationAnalyticTest {
 
         // среднее: (30 + 31) / 2 = 30.5 -> String.format("%.0f") округлит до "31"
         List<SleepingSession> data = List.of(s1, s2);
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<String> result = analytic.apply(data);
 
         assertEquals("31", result.getValue());
     }

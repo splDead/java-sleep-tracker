@@ -18,7 +18,7 @@ class BadQualityCounterTest {
     @DisplayName("Должен возвращать 0, если список сессий пуст")
     void applyShouldReturnZeroWhenDataIsEmptyForBadQualityCounter() {
         List<SleepingSession> emptyList = new ArrayList<>();
-        SleepAnalysisResult<?> result = analytic.apply(emptyList);
+        SleepAnalysisResult<Long> result = analytic.apply(emptyList);
 
         assertNotNull(result);
         assertEquals("Количество сессий с плохим качеством сна", result.getDescription());
@@ -32,7 +32,7 @@ class BadQualityCounterTest {
             TestUtil.createSession("2026-05-12T23:30:00", "2026-05-13T09:30:00", Quality.GOOD),
             TestUtil.createSession("2026-05-13T23:15:00", "2026-05-14T10:00:00", Quality.GOOD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(0L, result.getValue());
     }
@@ -47,7 +47,7 @@ class BadQualityCounterTest {
             TestUtil.createSession("2026-05-13T23:15:00", "2026-05-14T11:00:00", Quality.GOOD),
             TestUtil.createSession("2026-05-13T23:15:00", "2026-05-14T02:00:00", Quality.BAD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(3L, result.getValue());
     }

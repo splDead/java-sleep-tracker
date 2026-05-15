@@ -7,9 +7,9 @@ import ru.yandex.practicum.sleeptracker.SleepingSession;
 import java.util.List;
 import java.util.function.Function;
 
-public class BadQualityCounter implements Function<List<SleepingSession>, SleepAnalysisResult<?>> {
+public class BadQualityCounter implements Function<List<SleepingSession>, SleepAnalysisResult<Long>> {
     @Override
-    public SleepAnalysisResult<?> apply(List<SleepingSession> data) {
+    public SleepAnalysisResult<Long> apply(List<SleepingSession> data) {
         long count = data.stream()
                 .filter(s -> s.getQuality() == Quality.BAD)
                 .count();

@@ -71,7 +71,8 @@ class SleepTrackerAppTest {
 
         // создаем приложение и приверяем счетчик сессий
         SleepTrackerApp app = new SleepTrackerApp();
-        app.register(new SessionCounter());
+        SessionCounter sessionCounter = new SessionCounter();
+        app.register(sessionCounter::apply);
 
         List<String> sleepRawData = Files.readAllLines(tempFile);
         List<SleepingSession> sleepingSessions = sleepRawData.stream()

@@ -19,7 +19,7 @@ class MaxDurationAnalyticTest {
     @DisplayName("Должен возвращать 0, если список сессий пуст")
     void applyShouldReturnZeroWhenDataIsEmptyForMaxDurationAnalytic() {
         List<SleepingSession> emptyList = new ArrayList<>();
-        SleepAnalysisResult<?> result = analytic.apply(emptyList);
+        SleepAnalysisResult<Long> result = analytic.apply(emptyList);
 
         assertNotNull(result);
         assertEquals("Максимальная продолжительность сессии (в минутах)", result.getDescription());
@@ -33,7 +33,7 @@ class MaxDurationAnalyticTest {
         LocalDateTime end = LocalDateTime.parse("2026-05-14T06:00:00");
         SleepingSession session = new SleepingSession(start, end, Quality.GOOD);
         List<SleepingSession> data = List.of(session);
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(480L, result.getValue());
     }
@@ -46,7 +46,7 @@ class MaxDurationAnalyticTest {
             TestUtil.createSession("2026-05-12T22:00:00", "2026-05-13T07:00:00", Quality.GOOD),
             TestUtil.createSession("2026-05-13T23:30:00", "2026-05-14T04:30:00", Quality.BAD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(540L, result.getValue());
     }

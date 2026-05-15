@@ -33,15 +33,24 @@ public class SleepTrackerApp {
             // создаем приложение
             SleepTrackerApp app = new SleepTrackerApp();
 
+            SessionCounter sessionCounter = new SessionCounter();
+            GoodQualityCounter goodQualityCounter = new GoodQualityCounter();
+            BadQualityCounter badQualityCounter = new BadQualityCounter();
+            MinDurationAnalytic minDurationAnalytic = new MinDurationAnalytic();
+            MaxDurationAnalytic maxDurationAnalytic = new MaxDurationAnalytic();
+            AverageDurationAnalytic averageDurationAnalytic = new AverageDurationAnalytic();
+            SleeplessNightAnalytic sleeplessNightAnalytic = new SleeplessNightAnalytic();
+            ChronotypeAnalytic chronotypeAnalytic = new ChronotypeAnalytic();
+
             // регистрируем функции анализаторы
-            app.register(new SessionCounter());
-            app.register(new GoodQualityCounter());
-            app.register(new BadQualityCounter());
-            app.register(new MinDurationAnalytic());
-            app.register(new MaxDurationAnalytic());
-            app.register(new AverageDurationAnalytic());
-            app.register(new SleeplessNightAnalytic());
-            app.register(new ChronotypeAnalytic());
+            app.register(sessionCounter::apply);
+            app.register(goodQualityCounter::apply);
+            app.register(badQualityCounter::apply);
+            app.register(minDurationAnalytic::apply);
+            app.register(maxDurationAnalytic::apply);
+            app.register(averageDurationAnalytic::apply);
+            app.register(sleeplessNightAnalytic::apply);
+            app.register(chronotypeAnalytic::apply);
 
             // чтение сразу всего файла для избежания использования цикла while
             List<String> sleepRawData = Files.readAllLines(Paths.get(filePath));

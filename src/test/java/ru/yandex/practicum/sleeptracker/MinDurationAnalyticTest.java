@@ -18,7 +18,7 @@ class MinDurationAnalyticTest {
     @DisplayName("Должен возвращать 0, если список сессий пуст")
     void applyShouldReturnZeroWhenDataIsEmptyMinDurationAnalytic() {
         List<SleepingSession> emptyList = new ArrayList<>();
-        SleepAnalysisResult<?> result = analytic.apply(emptyList);
+        SleepAnalysisResult<Long> result = analytic.apply(emptyList);
 
         assertNotNull(result);
         assertEquals("Минимальная продолжительность сессии (в минутах)", result.getDescription());
@@ -29,7 +29,7 @@ class MinDurationAnalyticTest {
     @DisplayName("Должен возвращать длительность единственной сессии")
     void applyShouldReturnDurationForSingleSessionForMinDurationAnalytic() {
         List<SleepingSession> data = List.of(TestUtil.createSession("2026-05-13T23:00:00", "2026-05-14T06:30:00", Quality.NORMAL));
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(450L, result.getValue());
     }
@@ -42,7 +42,7 @@ class MinDurationAnalyticTest {
             TestUtil.createSession("2026-05-12T23:00:00", "2026-05-13T04:00:00", Quality.BAD),
             TestUtil.createSession("2026-05-13T21:30:00", "2026-05-14T06:30:00", Quality.GOOD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(300L, result.getValue());
     }

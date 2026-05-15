@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ChronotypeAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult<?>> {
+public class ChronotypeAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult<Chronotype>> {
     @Override
-    public SleepAnalysisResult<?> apply(List<SleepingSession> data) {
+    public SleepAnalysisResult<Chronotype> apply(List<SleepingSession> data) {
         // считаем счетчики хронотипов
         Map<Chronotype, Long> counts = data.stream()
             .filter(this::isNightSession) // фильтруем дневной сон

@@ -18,11 +18,11 @@ class SleeplessNightAnalyticTest {
     @DisplayName("Должен возвращать 0 бессонных ночей для пустого списка")
     void applyShouldReturnZeroWhenDataIsEmptyForSleeplessNightAnalytic() {
         List<SleepingSession> emptyList = new ArrayList<>();
-        SleepAnalysisResult<?> result = analytic.apply(emptyList);
+        SleepAnalysisResult<Long> result = analytic.apply(emptyList);
 
         assertNotNull(result);
         assertEquals("Количество бессонных ночей", result.getDescription());
-        assertEquals(0, result.getValue());
+        assertEquals(0L, result.getValue());
     }
 
     @Test
@@ -32,7 +32,7 @@ class SleeplessNightAnalyticTest {
             TestUtil.createSession("2026-05-11T23:00:00", "2026-05-12T07:00:00", Quality.GOOD),
             TestUtil.createSession("2026-05-12T23:00:00", "2026-05-13T07:00:00", Quality.GOOD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(0L, result.getValue());
     }
@@ -44,7 +44,7 @@ class SleeplessNightAnalyticTest {
             TestUtil.createSession("2026-05-11T23:00:00", "2026-05-12T07:00:00", Quality.GOOD),
             TestUtil.createSession("2026-05-13T23:00:00", "2026-05-14T07:00:00", Quality.GOOD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(1L, result.getValue());
     }
@@ -56,7 +56,7 @@ class SleeplessNightAnalyticTest {
             TestUtil.createSession("2026-05-12T07:00:00", "2026-05-12T11:00:00", Quality.GOOD),
             TestUtil.createSession("2026-05-12T13:00:00", "2026-05-12T17:00:00", Quality.NORMAL)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(1L, result.getValue());
     }
@@ -67,7 +67,7 @@ class SleeplessNightAnalyticTest {
         List<SleepingSession> data = List.of(
             TestUtil.createSession("2026-05-11T22:00:00", "2026-05-12T02:00:00", Quality.BAD)
         );
-        SleepAnalysisResult<?> result = analytic.apply(data);
+        SleepAnalysisResult<Long> result = analytic.apply(data);
 
         assertEquals(0L, result.getValue());
     }

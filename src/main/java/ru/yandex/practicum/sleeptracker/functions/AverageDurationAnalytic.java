@@ -7,9 +7,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.function.Function;
 
-public class AverageDurationAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult<?>> {
+public class AverageDurationAnalytic implements Function<List<SleepingSession>, SleepAnalysisResult<String>> {
     @Override
-    public SleepAnalysisResult<?> apply(List<SleepingSession> data) {
+    public SleepAnalysisResult<String> apply(List<SleepingSession> data) {
         double avg = data.stream()
                 .mapToLong(s -> Duration.between(s.getStart(), s.getEnd()).toMinutes())
                 .average()
